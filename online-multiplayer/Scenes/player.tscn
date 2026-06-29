@@ -3,6 +3,17 @@
 [ext_resource type="Script" uid="uid://blx0wdvqr1cre" path="res://Scripts/player.gd" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://bg8cdcr0kmixc" path="res://Assets/star_06.png" id="2_cvnsp"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cvnsp"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Camera:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_cvnsp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6t5aa"]
@@ -251,7 +262,11 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody3D" unique_id=433868205]
+collision_layer = 2
 script = ExtResource("1_v0iea")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=351885779]
+replication_config = SubResource("SceneReplicationConfig_cvnsp")
 
 [node name="Body" type="MeshInstance3D" parent="." unique_id=230434564]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

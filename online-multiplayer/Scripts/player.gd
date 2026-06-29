@@ -3,18 +3,27 @@ extends CharacterBody3D
 @onready var camera: Camera3D = $Camera
 @onready var animation: AnimationPlayer = $Camera/Hand/AnimationPlayer
 @onready var gpu_particles_3d: GPUParticles3D = $Camera/Hand/Pistol/GPUParticles3D
+@onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 
 const SPEED = 10
 const JUMP_VELOCITY = 5
 var lock = false
 var pause = false
+func _enter_tree() -> void:
+	set_multiplayer_authority(str(name).to_int())
 func _ready() -> void:
+	if !is_multiplayer_authority():
+		return 
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	lock = true
 func _unhandled_input(event: InputEvent) -> void:
+	
+	if !is_multiplayer_authority():
+		return 
 	if event is InputEventMouseMotion:
-		rotate_y(-event.relative.x * 0.005)
-		camera.rotation.x = clamp(camera.rotation.x - event.relative.y * 0.01,deg_to_rad(-60),deg_to_rad(60))
+		if lock:
+			rotate_y(-event.relative.x * 0.005)
+			camera.rotation.x = clamp(camera.rotation.x - event.relative.y * 0.01,deg_to_rad(-60),deg_to_rad(60))
 		
 	if Input.is_action_just_pressed("shoot") and animation.current_animation != "shoot":
 		animation.stop()
@@ -22,6 +31,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		gpu_particles_3d.restart()
 		gpu_particles_3d.emitting = true
 func _physics_process(delta: float) -> void:
+	
+	if !is_multiplayer_authority():
+		camera.current = false
+		return 
+	camera.current = true
 	if Input.is_action_just_pressed("ctrl") and lock:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		lock = false
