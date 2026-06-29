@@ -4,7 +4,8 @@ extends CharacterBody3D
 @onready var animation: AnimationPlayer = $Camera/Hand/AnimationPlayer
 @onready var gpu_particles_3d: GPUParticles3D = $Camera/Hand/Pistol/GPUParticles3D
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
-
+@onready var ray_cast_3d: RayCast3D = $Camera/RayCast3D
+var health = 5.0
 const SPEED = 10
 const JUMP_VELOCITY = 5
 var lock = false
@@ -26,12 +27,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			camera.rotation.x = clamp(camera.rotation.x - event.relative.y * 0.01,deg_to_rad(-60),deg_to_rad(60))
 		
 	if Input.is_action_just_pressed("shoot") and animation.current_animation != "shoot":
-		animation.stop()
-		animation.play("shoot")
-		gpu_particles_3d.restart()
-		gpu_particles_3d.emitting = true
+		sho_eff.rpc()
+		if ray_cast_3d.is_colliding():
+			var target = ray_cast_3d.get_collider()
+			target.damage.rpc_id(target.get_multiplayer_authority())
 func _physics_process(delta: float) -> void:
-	
+
 	if !is_multiplayer_authority():
 		camera.current = false
 		return 
@@ -66,4 +67,25 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+	
 	move_and_slide()
+	
+@rpc("call_local")
+func sho_eff():
+	animation.stop()
+	animation.play("shoot")
+	gpu_particles_3d.restart()
+	gpu_particles_3d.emitting = true
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "shoot":
+		animation.play("idle")
+
+@rpc("any_peer")
+func damage():
+	health -= 1.0
+	if health == 0:
+		global_position = Vector3.ZERO
+		health = 5
+	
