@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bg6008n20cjpt"]
 
-[ext_resource type="PackedScene" uid="uid://dak7erwf73sy5" path="res://Scenes/player.tscn" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://b415mmr82f3u1" path="res://Scripts/menu.gd" id="1_bo1nx"]
+[ext_resource type="FontFile" uid="uid://bd1bts41cb7gs" path="res://Assets/BlackOpsOne-Regular.ttf" id="2_8gbba"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jjgbg"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -15,7 +16,32 @@ sky = SubResource("Sky_bo1nx")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvhh"]
+bg_color = Color(0.15686275, 0.15686275, 0.15686275, 0.78431374)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kry3j"]
+bg_color = Color(0.15686275, 0.15686275, 0.15686275, 0.78431374)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
 [node name="Main" type="Node3D" unique_id=393381480]
+script = ExtResource("1_bo1nx")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1828420523]
 environment = SubResource("Environment_8gbba")
@@ -29,4 +55,175 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
 size = Vector3(9.476318, 1, 15.941406)
 
-[node name="Player" parent="." unique_id=433868205 instance=ExtResource("1_jjgbg")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1032396229]
+
+[node name="Button" type="Button" parent="CanvasLayer" unique_id=2071163290]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -270.5
+offset_top = -318.0
+offset_right = 270.5
+offset_bottom = -172.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_jjvhh")
+
+[node name="Label" type="Label" parent="CanvasLayer/Button" unique_id=2143869423]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.0
+offset_top = -40.5
+offset_right = 404.0
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_8gbba")
+theme_override_font_sizes/font_size = 90
+text = "Play"
+horizontal_alignment = 1
+
+[node name="Button2" type="Button" parent="CanvasLayer" unique_id=1293858243]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = 169.25
+offset_right = 132.0
+offset_bottom = 236.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_kry3j")
+
+[node name="Label" type="Label" parent="CanvasLayer/Button2" unique_id=982013055]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.0
+offset_top = -31.5
+offset_right = 104.0
+offset_bottom = 49.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_8gbba")
+theme_override_font_sizes/font_size = 50
+text = "Quit"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1506421941]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.0
+offset_top = -274.5
+offset_right = 404.0
+offset_bottom = 4.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_8gbba")
+theme_override_font_sizes/font_size = 110
+text = "Pistols Arena"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer" unique_id=384591805]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.0
+offset_top = -148.0
+offset_right = 404.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_8gbba")
+theme_override_font_sizes/font_size = 110
+text = "Online"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1423147995]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -229.0
+offset_right = 275.0
+offset_bottom = 229.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.78431374)
+
+[node name="Border" type="Node2D" parent="CanvasLayer/ColorRect" unique_id=243098676]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/ColorRect/Border" unique_id=1422482611]
+offset_right = 550.0
+offset_bottom = 7.0
+color = Color(0, 1, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/ColorRect/Border" unique_id=104365628]
+offset_top = 451.0
+offset_right = 550.0
+offset_bottom = 458.0
+color = Color(0, 1, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/ColorRect/Border" unique_id=759733609]
+offset_right = 7.0
+offset_bottom = 458.0
+color = Color(0, 1, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/ColorRect/Border" unique_id=577722977]
+offset_left = 543.0
+offset_right = 550.0
+offset_bottom = 458.0
+color = Color(0, 1, 0, 1)
+
+[node name="Button" type="Button" parent="CanvasLayer/ColorRect" unique_id=2111071583]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -246.75
+offset_top = 24.0
+offset_right = 246.75
+offset_bottom = 123.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_jjvhh")
+
+[node name="Label" type="Label" parent="CanvasLayer/ColorRect/Button" unique_id=12016789]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -404.0
+offset_top = -40.5
+offset_right = 404.0
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_8gbba")
+theme_override_font_sizes/font_size = 60
+text = "Host"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Button2" to="." method="_on_button_2_pressed"]

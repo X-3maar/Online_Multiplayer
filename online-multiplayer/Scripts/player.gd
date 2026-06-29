@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var camera: Camera3D = $Camera
 @onready var animation: AnimationPlayer = $Camera/Hand/AnimationPlayer
+@onready var gpu_particles_3d: GPUParticles3D = $Camera/Hand/Pistol/GPUParticles3D
 
 const SPEED = 10
 const JUMP_VELOCITY = 5
@@ -18,6 +19,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("shoot") and animation.current_animation != "shoot":
 		animation.stop()
 		animation.play("shoot")
+		gpu_particles_3d.restart()
+		gpu_particles_3d.emitting = true
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("ctrl") and lock:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

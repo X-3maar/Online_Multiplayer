@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://dak7erwf73sy5"]
 
 [ext_resource type="Script" uid="uid://blx0wdvqr1cre" path="res://Scripts/player.gd" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://bg8cdcr0kmixc" path="res://Assets/star_06.png" id="2_cvnsp"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_cvnsp"]
 
@@ -111,6 +112,35 @@ roughness = 0.26
 albedo_color = Color(0.20871013, 0.20871016, 0.20871013, 1)
 metallic = 0.5
 roughness = 0.0
+
+[sub_resource type="Gradient" id="Gradient_cvnsp"]
+offsets = PackedFloat32Array(0, 0.23626374, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6t5aa"]
+gradient = SubResource("Gradient_cvnsp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v0iea"]
+angle_min = 45.00001
+angle_max = 45.00001
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("GradientTexture1D_6t5aa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8erm5"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 0.49803922, 1)
+albedo_texture = ExtResource("2_cvnsp")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_f1ek2"]
+material = SubResource("StandardMaterial3D_8erm5")
+size = Vector2(0.5, 0.5)
+orientation = 2
 
 [sub_resource type="Animation" id="Animation_v0iea"]
 length = 0.001
@@ -264,6 +294,16 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.037133694, 0.48577166, -0.
 mesh = SubResource("ArrayMesh_v0iea")
 surface_material_override/0 = SubResource("StandardMaterial3D_vgqql")
 surface_material_override/1 = SubResource("StandardMaterial3D_x3wgy")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Camera/Hand/Pistol" unique_id=1391395392]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9802322e-08, 0.06118214, -0.25769657)
+emitting = false
+amount = 1
+lifetime = 0.25
+one_shot = true
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_v0iea")
+draw_pass_1 = SubResource("PlaneMesh_f1ek2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/Hand" unique_id=1418887393]
 libraries/ = SubResource("AnimationLibrary_6t5aa")
