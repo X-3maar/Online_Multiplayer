@@ -1,5 +1,5 @@
 extends CharacterBody3D
-
+signal damaged(healthv)
 @onready var camera: Camera3D = $Camera
 @onready var animation: AnimationPlayer = $Camera/Hand/AnimationPlayer
 @onready var gpu_particles_3d: GPUParticles3D = $Camera/Hand/Pistol/GPUParticles3D
@@ -88,4 +88,5 @@ func damage():
 	if health == 0:
 		global_position = Vector3.ZERO
 		health = 5
+	damaged.emit(health)
 	
